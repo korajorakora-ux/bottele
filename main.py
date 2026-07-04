@@ -173,6 +173,9 @@ async def handle_chat_join_request(chat_join_request: ChatJoinRequest):
         )
         await safe_send_message(chat_id=user_id, text=AR_MESSAGE, reply_markup=lang_keyboard)
         
+        # انتظار 5 ثواني حتى يتمكن العميل من قراءة الرسالة قبل ظهور الصورة الطويلة
+        await asyncio.sleep(5)
+        
         # 3. Send the registration illustration image with "Done" button
         done_keyboard = InlineKeyboardMarkup(
             inline_keyboard=[[InlineKeyboardButton(text="✅ تم / Terminé", callback_data="confirm_registration")]]
