@@ -192,14 +192,31 @@ async def global_error_handler(event: ErrorEvent):
     return True
 
 
+@dp.message(Command("stats"))
+async def handle_stats(message: Message):
+    """Admin command to show bot statistics."""
+    if not ADMIN_ID or message.from_user.id != int(ADMIN_ID):
+        return
+        
+    await message.reply("⏳ <b>جاري جلب الإحصائيات من قاعدة البيانات...</b>")
+    users = await get_all_users()
+    
+    stats_msg = f"""📊 <b>إحصائيات البوت:</b>
+
+👥 إجمالي عدد العملاء المسجلين: <b>{len(users)}</b> عميل."""
+    
+    await message.reply(stats_msg)
+
+
 @dp.message(Command("broadcast"))
 async def handle_broadcast(message: Message):
+    """Admin command to broadcast a message (supports media via reply) to all users in the database."""
     if not ADMIN_ID or message.from_user.id != int(ADMIN_ID):
         return
 
-    text = message.text.replace("/broadcast", "", 1).strip()
-    if not text:
-        await message.reply("⚠️ <b>خطأ:</b> برجاء كتابة الرسالة بعد الأمر.\n\n📝 مثال:\n`/broadcast عرض خاص جداً اليوم للمسجلين الجدد!`")
+    # To send media (photos/videos), the admin must REPLY to a message they sent.
+    if not message.reply_to_message:
+        await message.reply("⚠️ <b>خطأ:</b> يجب أن تقوم بالرد (Reply) على الرسالة (أو الصورة/الفيديو) التي تريد إرسالها بكتابة الأمر `/broadcast`.")
         return
 
     await message.reply("⏳ <b>جاري تجهيز الإرسال الجماعي...</b>")
@@ -215,17 +232,33 @@ async def handle_broadcast(message: Message):
     failed = 0
     
     for user_id in users:
-        res = await safe_send_message(chat_id=user_id, text=text)
-        if res:
+        try:
+            # message.send_copy copies everything perfectly (image, video, formatting)
+            await message.reply_to_message.send_copy(
+                chat_id=user_id,
+                reply_markup=message.reply_to_message.reply_markup
+            )
             success += 1
-        else:
+        except TelegramRetryAfter as e:
+            logger.warning(f"Rate limited during broadcast. Sleeping for {e.retry_after} seconds.")
+            await asyncio.sleep(e.retry_after)
+            try:
+                await message.reply_to_message.send_copy(chat_id=user_id)
+                success += 1
+            except:
+                failed += 1
+        except TelegramForbiddenError:
+            failed += 1
+        except Exception as e:
+            logger.error(f"Error broadcasting to {user_id}: {e}")
             failed += 1
         
+        # Tiny sleep to respect Telegram's rate limits
         await asyncio.sleep(0.05)
 
-    report = f"""✅ <b>اكتمل الإرسال الجماعي!</b>
+    report = f"""✅ <b>اكتمل الإرسال الجماعي بنجاح!</b>
 
-🟢 نجح الإرسال لـ: {success} مستخدم
+🟢 تم الإرسال لـ: {success} مستخدم
 🔴 فشل الإرسال لـ: {failed} مستخدم (قاموا بحظر البوت)"""
     
     await message.reply(report)
@@ -270,7 +303,6 @@ async def handle_chat_join_request(chat_join_request: ChatJoinRequest):
 
         await safe_send_message(chat_id=user_id, text=AR_MESSAGE, reply_markup=get_ar_keyboard())
         
-        # Delay increased to 8 seconds per user request
         await asyncio.sleep(8)
         
         done_keyboard = InlineKeyboardMarkup(
