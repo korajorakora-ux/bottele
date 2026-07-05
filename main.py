@@ -49,10 +49,10 @@ AR_MESSAGE = """👋 <b>أهلاً بك يا بطل، ونورت القناة!</
 <b>خطوات بسيطة جداً تفصلك عن الانضمام:</b>
 
 1️⃣ <b>لإنشاء حسابك الجديد:</b>
-🌐 اضغط على زر (سجل الآن) بالأسفل.
+<a href="https://redirspinner.com/30jg?p=%2Fregistration%2F">🌐 اضغط هنا للتسجيل</a> (أو استخدم الزر بالأسفل).
 
 2️⃣ <b>لتحميل تطبيق الأندرويد:</b>
-📱 اضغط على زر (حمل التطبيق الآن) بالأسفل.
+<a href="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K">📱 اضغط هنا للتحميل</a> (أو استخدم الزر بالأسفل).
 
 3️⃣ 🎁 <b>عند التسجيل، استخدم كود البونص:</b>
 <code>KORAWIN</code>
@@ -72,10 +72,10 @@ Pour recevoir les coupons cumulatifs quotidiens et générer des profits continu
 <b>Des étapes très simples vous séparent de l'accès :</b>
 
 1️⃣ <b>Pour créer votre nouveau compte :</b>
-🌐 Cliquez sur le bouton (S'inscrire maintenant) ci-dessous.
+<a href="https://redirspinner.com/30jg?p=%2Fregistration%2F">🌐 Cliquez ici pour vous inscrire</a> (ou utilisez le bouton ci-dessous).
 
 2️⃣ <b>Pour télécharger l'application Android :</b>
-📱 Cliquez sur le bouton (Télécharger l'application) ci-dessous.
+<a href="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K">📱 Cliquez ici pour télécharger</a> (ou utilisez le bouton ci-dessous).
 
 3️⃣ 🎁 <b>Lors de l'inscription, utilisez le code promo :</b>
 <code>KORAWIN</code>
@@ -99,9 +99,11 @@ APPROVAL_MSG = """🎉 <b>مبروك! تم قبول انضمامك للقناة 
 
 تذكير أخير ومهم جداً لضمان بقائك معنا واستفادتك من التوقعات:
 
-1️⃣ إذا لم تقم بإنشاء حسابك بعد، قم بإنشائه الآن من خلال زر التسجيل بالأسفل.
+1️⃣ إذا لم تقم بإنشاء حسابك بعد، قم بإنشائه الآن:
+<a href="https://redirspinner.com/30jg?p=%2Fregistration%2F">🌐 رابط التسجيل المباشر</a>
 
-2️⃣ حمل التطبيق من خلال زر التحميل بالأسفل.
+2️⃣ حمل التطبيق من هنا:
+<a href="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K">📱 رابط التحميل</a>
 
 🎁 <b>لا تنسَ استخدام كود البونص:</b> <code>KORAWIN</code> للحصول على المكافأة.
 
@@ -253,7 +255,7 @@ async def handle_broadcast(message: Message):
             logger.error(f"Error broadcasting to {user_id}: {e}")
             failed += 1
         
-        # Tiny sleep to respect Telegram's rate limits
+        # Tiny sleep to respect Telegram's rate limits strictly (30 msg/sec limit)
         await asyncio.sleep(0.05)
 
     report = f"""✅ <b>اكتمل الإرسال الجماعي بنجاح!</b>
@@ -303,7 +305,8 @@ async def handle_chat_join_request(chat_join_request: ChatJoinRequest):
 
         await safe_send_message(chat_id=user_id, text=AR_MESSAGE, reply_markup=get_ar_keyboard())
         
-        await asyncio.sleep(8)
+        # Delay increased to 13 seconds (8 + 5) per user request
+        await asyncio.sleep(13)
         
         done_keyboard = InlineKeyboardMarkup(
             inline_keyboard=[[InlineKeyboardButton(text="✅ تم / Terminé", callback_data="confirm_registration")]]
