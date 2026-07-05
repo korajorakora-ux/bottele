@@ -49,10 +49,10 @@ AR_MESSAGE = """👋 <b>أهلاً بك يا بطل، ونورت القناة!</
 <b>خطوات بسيطة جداً تفصلك عن الانضمام:</b>
 
 1️⃣ <b>لإنشاء حسابك الجديد:</b>
-<a href="https://redirspinner.com/30jg?p=%2Fregistration%2F">🌐 اضغط هنا للتسجيل</a>
+🌐 اضغط على زر (سجل الآن) بالأسفل.
 
 2️⃣ <b>لتحميل تطبيق الأندرويد:</b>
-<a href="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K">📱 اضغط هنا للتحميل</a>
+📱 اضغط على زر (حمل التطبيق الآن) بالأسفل.
 
 3️⃣ 🎁 <b>عند التسجيل، استخدم كود البونص:</b>
 <code>KORAWIN</code>
@@ -72,10 +72,10 @@ Pour recevoir les coupons cumulatifs quotidiens et générer des profits continu
 <b>Des étapes très simples vous séparent de l'accès :</b>
 
 1️⃣ <b>Pour créer votre nouveau compte :</b>
-<a href="https://redirspinner.com/30jg?p=%2Fregistration%2F">🌐 Cliquez ici pour vous inscrire</a>
+🌐 Cliquez sur le bouton (S'inscrire maintenant) ci-dessous.
 
 2️⃣ <b>Pour télécharger l'application Android :</b>
-<a href="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K">📱 Cliquez ici pour télécharger</a>
+📱 Cliquez sur le bouton (Télécharger l'application) ci-dessous.
 
 3️⃣ 🎁 <b>Lors de l'inscription, utilisez le code promo :</b>
 <code>KORAWIN</code>
@@ -99,16 +99,41 @@ APPROVAL_MSG = """🎉 <b>مبروك! تم قبول انضمامك للقناة 
 
 تذكير أخير ومهم جداً لضمان بقائك معنا واستفادتك من التوقعات:
 
-1️⃣ إذا لم تقم بإنشاء حسابك بعد، قم بإنشائه الآن:
-<a href="https://redirspinner.com/30jg?p=%2Fregistration%2F">🌐 رابط التسجيل المباشر</a>
+1️⃣ إذا لم تقم بإنشاء حسابك بعد، قم بإنشائه الآن من خلال زر التسجيل بالأسفل.
 
-2️⃣ حمل التطبيق من هنا:
-<a href="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K">📱 رابط التحميل</a>
+2️⃣ حمل التطبيق من خلال زر التحميل بالأسفل.
 
 🎁 <b>لا تنسَ استخدام كود البونص:</b> <code>KORAWIN</code> للحصول على المكافأة.
 
 بالتوفيق، ونراك في أرباح اليوم! 💸❤️"""
 
+
+# ----------------- INLINE KEYBOARDS -----------------
+def get_ar_keyboard():
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="🇲🇦 Voir en Français", callback_data="switch_fr")],
+            [InlineKeyboardButton(text="🟢 🌐 سجل الآن", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
+            [InlineKeyboardButton(text="🔵 📱 حمل التطبيق الآن", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
+        ]
+    )
+
+def get_fr_keyboard():
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="🇪🇬 عرض بالعربية", callback_data="switch_ar")],
+            [InlineKeyboardButton(text="🟢 🌐 S'inscrire maintenant", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
+            [InlineKeyboardButton(text="🔵 📱 Télécharger l'application", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
+        ]
+    )
+
+def get_approval_keyboard():
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="🟢 🌐 سجل الآن", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
+            [InlineKeyboardButton(text="🔵 📱 حمل التطبيق الآن", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
+        ]
+    )
 
 # ----------------- SAFE SEND WRAPPERS -----------------
 async def safe_send_message(chat_id: int, text: str, reply_markup: Optional[InlineKeyboardMarkup] = None) -> Optional[Message]:
@@ -169,12 +194,9 @@ async def global_error_handler(event: ErrorEvent):
 
 @dp.message(Command("broadcast"))
 async def handle_broadcast(message: Message):
-    """Admin command to broadcast a message to all users in the database."""
-    # Security check: Ensure the sender is the configured admin
     if not ADMIN_ID or message.from_user.id != int(ADMIN_ID):
         return
 
-    # Extract the text after the command
     text = message.text.replace("/broadcast", "", 1).strip()
     if not text:
         await message.reply("⚠️ <b>خطأ:</b> برجاء كتابة الرسالة بعد الأمر.\n\n📝 مثال:\n`/broadcast عرض خاص جداً اليوم للمسجلين الجدد!`")
@@ -192,7 +214,6 @@ async def handle_broadcast(message: Message):
     success = 0
     failed = 0
     
-    # Loop over all users and send the message safely
     for user_id in users:
         res = await safe_send_message(chat_id=user_id, text=text)
         if res:
@@ -200,7 +221,6 @@ async def handle_broadcast(message: Message):
         else:
             failed += 1
         
-        # Tiny sleep to respect Telegram's rate limits strictly (30 msg/sec limit)
         await asyncio.sleep(0.05)
 
     report = f"""✅ <b>اكتمل الإرسال الجماعي!</b>
@@ -213,19 +233,16 @@ async def handle_broadcast(message: Message):
 
 @dp.chat_member(ChatMemberUpdatedFilter(member_status_changed=IS_NOT_MEMBER >> IS_MEMBER))
 async def on_user_approved(event: ChatMemberUpdated):
-    """Triggered when a user is APPROVED to join the channel."""
     try:
         user = event.new_chat_member.user
         
-        # 1. Save/Update user to database
         await upsert_user(
             user_id=user.id,
             first_name=user.first_name,
             username=user.username
         )
         
-        # 2. Send follow-up confirmation message
-        await safe_send_message(chat_id=user.id, text=APPROVAL_MSG)
+        await safe_send_message(chat_id=user.id, text=APPROVAL_MSG, reply_markup=get_approval_keyboard())
         logger.info(f"Sent approval follow-up and saved user {user.id} to DB.")
         
     except Exception as e:
@@ -240,29 +257,22 @@ async def handle_chat_join_request(chat_join_request: ChatJoinRequest):
         vip1_path = BASE_DIR / "images" / "vip1.png"
         register_img_path = BASE_DIR / "images" / "register.jpeg"
         
-        # 0. Save user to database initially upon request
         await upsert_user(
             user_id=user_id,
             first_name=user.first_name,
             username=user.username
         )
 
-        # 1. Send the VIP image using safe sender
         if vip1_path.exists() and vip1_path.is_file():
             await safe_send_photo(chat_id=user_id, photo_key="vip1", photo_path=vip1_path)
         else:
             logger.warning(f"Image '{vip1_path}' not found.")
 
-        # 2. Send the convincing Arabic message with a French switch button
-        lang_keyboard = InlineKeyboardMarkup(
-            inline_keyboard=[[InlineKeyboardButton(text="🇲🇦 Voir en Français", callback_data="switch_fr")]]
-        )
-        await safe_send_message(chat_id=user_id, text=AR_MESSAGE, reply_markup=lang_keyboard)
+        await safe_send_message(chat_id=user_id, text=AR_MESSAGE, reply_markup=get_ar_keyboard())
         
-        # Delay for 5 seconds to let user read the message
-        await asyncio.sleep(5)
+        # Delay increased to 8 seconds per user request
+        await asyncio.sleep(8)
         
-        # 3. Send the registration illustration image with "Done" button
         done_keyboard = InlineKeyboardMarkup(
             inline_keyboard=[[InlineKeyboardButton(text="✅ تم / Terminé", callback_data="confirm_registration")]]
         )
@@ -284,12 +294,9 @@ async def switch_to_french(callback_query: CallbackQuery):
     await callback_query.answer(cache_time=2)
     try:
         if callback_query.message:
-            keyboard = InlineKeyboardMarkup(
-                inline_keyboard=[[InlineKeyboardButton(text="🇪🇬 عرض بالعربية", callback_data="switch_ar")]]
-            )
             await callback_query.message.edit_text(
                 text=FR_MESSAGE,
-                reply_markup=keyboard,
+                reply_markup=get_fr_keyboard(),
                 link_preview_options=LinkPreviewOptions(is_disabled=True)
             )
     except TelegramAPIError as e:
@@ -304,12 +311,9 @@ async def switch_to_arabic(callback_query: CallbackQuery):
     await callback_query.answer(cache_time=2)
     try:
         if callback_query.message:
-            keyboard = InlineKeyboardMarkup(
-                inline_keyboard=[[InlineKeyboardButton(text="🇲🇦 Voir en Français", callback_data="switch_fr")]]
-            )
             await callback_query.message.edit_text(
                 text=AR_MESSAGE,
-                reply_markup=keyboard,
+                reply_markup=get_ar_keyboard(),
                 link_preview_options=LinkPreviewOptions(is_disabled=True)
             )
     except TelegramAPIError as e:
