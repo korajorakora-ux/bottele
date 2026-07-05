@@ -113,8 +113,8 @@ def get_ar_keyboard():
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton(text="🇲🇦 Voir en Français", callback_data="switch_fr")],
-            [InlineKeyboardButton(text="🟢 🌐 سجل الآن", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
-            [InlineKeyboardButton(text="🔵 📱 حمل التطبيق الآن", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
+            [InlineKeyboardButton(text="📝 سجل الآن", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
+            [InlineKeyboardButton(text="📥 حمل التطبيق الآن", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
         ]
     )
 
@@ -122,16 +122,16 @@ def get_fr_keyboard():
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton(text="🇪🇬 عرض بالعربية", callback_data="switch_ar")],
-            [InlineKeyboardButton(text="🟢 🌐 S'inscrire maintenant", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
-            [InlineKeyboardButton(text="🔵 📱 Télécharger l'application", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
+            [InlineKeyboardButton(text="📝 S'inscrire maintenant", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
+            [InlineKeyboardButton(text="📥 Télécharger l'application", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
         ]
     )
 
 def get_approval_keyboard():
     return InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="🟢 🌐 سجل الآن", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
-            [InlineKeyboardButton(text="🔵 📱 حمل التطبيق الآن", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
+            [InlineKeyboardButton(text="📝 سجل الآن", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
+            [InlineKeyboardButton(text="📥 حمل التطبيق الآن", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
         ]
     )
 
