@@ -6,6 +6,8 @@ from typing import Optional, Union
 
 from aiogram import Bot, Dispatcher, F
 from aiogram.client.default import DefaultBotProperties
+from aiogram.filters import Command
+from aiogram.filters.chat_member_updated import ChatMemberUpdatedFilter, IS_NOT_MEMBER, IS_MEMBER
 from aiogram.types import (
     ChatJoinRequest,
     InlineKeyboardMarkup,
@@ -14,11 +16,13 @@ from aiogram.types import (
     FSInputFile,
     LinkPreviewOptions,
     ErrorEvent,
-    Message
+    Message,
+    ChatMemberUpdated
 )
 from aiogram.exceptions import TelegramAPIError, TelegramForbiddenError, TelegramRetryAfter
 
-from config import BOT_TOKEN, BASE_DIR
+from config import BOT_TOKEN, BASE_DIR, ADMIN_ID
+from database import upsert_user, get_all_users
 
 # Professional Logging setup
 logging.basicConfig(
@@ -32,7 +36,6 @@ bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode="HTML"))
 dp = Dispatcher()
 
 # ----------------- CACHE FOR FILE IDs -----------------
-# This cache prevents uploading the same image 100 times under heavy load.
 FILE_CACHE = {
     "vip1": None,
     "register": None
@@ -78,7 +81,7 @@ Pour recevoir les coupons cumulatifs quotidiens et générer des profits continu
 <code>KORAWIN</code>
 <i>(Ce code garantit un puissant bonus de bienvenue sur votre compte !)</i>
 
-💡 <b>Le service est totalement gratuit.</b> Aucun frais ou abonnement ne sera demandé !
+💡 <b>Le service est totally gratuit.</b> Aucun frais ou abonnement ne sera demandé !
 
 💬 <b>Pour toute question, contactez-moi personnellement :</b>
 @generalFady
@@ -92,10 +95,23 @@ Votre confirmation a été reçue. Votre demande sera acceptée dans quelques mi
 
 بالتوفيق ❤️🍀"""
 
+APPROVAL_MSG = """🎉 <b>مبروك! تم قبول انضمامك للقناة الـ VIP بنجاح.</b>
 
-# ----------------- SAFE SEND WRAPPERS (Anti-Flood) -----------------
+تذكير أخير ومهم جداً لضمان بقائك معنا واستفادتك من التوقعات:
+
+1️⃣ إذا لم تقم بإنشاء حسابك بعد، قم بإنشائه الآن:
+<a href="https://redirspinner.com/30jg?p=%2Fregistration%2F">🌐 رابط التسجيل المباشر</a>
+
+2️⃣ حمل التطبيق من هنا:
+<a href="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K">📱 رابط التحميل</a>
+
+🎁 <b>لا تنسَ استخدام كود البونص:</b> <code>KORAWIN</code> للحصول على المكافأة.
+
+بالتوفيق، ونراك في أرباح اليوم! 💸❤️"""
+
+
+# ----------------- SAFE SEND WRAPPERS -----------------
 async def safe_send_message(chat_id: int, text: str, reply_markup: Optional[InlineKeyboardMarkup] = None) -> Optional[Message]:
-    """Sends a message safely with RetryAfter handling."""
     retries = 3
     for attempt in range(retries):
         try:
@@ -117,11 +133,9 @@ async def safe_send_message(chat_id: int, text: str, reply_markup: Optional[Inli
     return None
 
 async def safe_send_photo(chat_id: int, photo_key: str, photo_path: Path, reply_markup: Optional[InlineKeyboardMarkup] = None) -> Optional[Message]:
-    """Sends a photo safely, caching the file_id to prevent redundant uploads."""
     retries = 3
     for attempt in range(retries):
         try:
-            # Use cached file_id if available (zero upload time)
             photo_to_send: Union[str, FSInputFile] = FILE_CACHE[photo_key] if FILE_CACHE[photo_key] else FSInputFile(path=photo_path)
             
             msg = await bot.send_photo(
@@ -130,7 +144,6 @@ async def safe_send_photo(chat_id: int, photo_key: str, photo_path: Path, reply_
                 reply_markup=reply_markup
             )
             
-            # Cache the file_id for future use
             if not FILE_CACHE[photo_key] and msg.photo:
                 FILE_CACHE[photo_key] = msg.photo[-1].file_id
                 logger.info(f"Cached file_id for {photo_key}")
@@ -154,13 +167,86 @@ async def global_error_handler(event: ErrorEvent):
     return True
 
 
+@dp.message(Command("broadcast"))
+async def handle_broadcast(message: Message):
+    """Admin command to broadcast a message to all users in the database."""
+    # Security check: Ensure the sender is the configured admin
+    if not ADMIN_ID or message.from_user.id != int(ADMIN_ID):
+        return
+
+    # Extract the text after the command
+    text = message.text.replace("/broadcast", "", 1).strip()
+    if not text:
+        await message.reply("⚠️ <b>خطأ:</b> برجاء كتابة الرسالة بعد الأمر.\n\n📝 مثال:\n`/broadcast عرض خاص جداً اليوم للمسجلين الجدد!`")
+        return
+
+    await message.reply("⏳ <b>جاري تجهيز الإرسال الجماعي...</b>")
+    
+    users = await get_all_users()
+    if not users:
+        await message.reply("⚠️ لم يتم العثور على أي مستخدمين في قاعدة البيانات.")
+        return
+
+    await message.reply(f"🚀 <b>بدأ الإرسال إلى {len(users)} عميل...</b>\nستصلك رسالة نهائية عند الانتهاء.")
+    
+    success = 0
+    failed = 0
+    
+    # Loop over all users and send the message safely
+    for user_id in users:
+        res = await safe_send_message(chat_id=user_id, text=text)
+        if res:
+            success += 1
+        else:
+            failed += 1
+        
+        # Tiny sleep to respect Telegram's rate limits strictly (30 msg/sec limit)
+        await asyncio.sleep(0.05)
+
+    report = f"""✅ <b>اكتمل الإرسال الجماعي!</b>
+
+🟢 نجح الإرسال لـ: {success} مستخدم
+🔴 فشل الإرسال لـ: {failed} مستخدم (قاموا بحظر البوت)"""
+    
+    await message.reply(report)
+
+
+@dp.chat_member(ChatMemberUpdatedFilter(member_status_changed=IS_NOT_MEMBER >> IS_MEMBER))
+async def on_user_approved(event: ChatMemberUpdated):
+    """Triggered when a user is APPROVED to join the channel."""
+    try:
+        user = event.new_chat_member.user
+        
+        # 1. Save/Update user to database
+        await upsert_user(
+            user_id=user.id,
+            first_name=user.first_name,
+            username=user.username
+        )
+        
+        # 2. Send follow-up confirmation message
+        await safe_send_message(chat_id=user.id, text=APPROVAL_MSG)
+        logger.info(f"Sent approval follow-up and saved user {user.id} to DB.")
+        
+    except Exception as e:
+        logger.error(f"Error in on_user_approved: {e}", exc_info=True)
+
+
 @dp.chat_join_request()
 async def handle_chat_join_request(chat_join_request: ChatJoinRequest):
     try:
-        user_id = chat_join_request.from_user.id
+        user = chat_join_request.from_user
+        user_id = user.id
         vip1_path = BASE_DIR / "images" / "vip1.png"
         register_img_path = BASE_DIR / "images" / "register.jpeg"
         
+        # 0. Save user to database initially upon request
+        await upsert_user(
+            user_id=user_id,
+            first_name=user.first_name,
+            username=user.username
+        )
+
         # 1. Send the VIP image using safe sender
         if vip1_path.exists() and vip1_path.is_file():
             await safe_send_photo(chat_id=user_id, photo_key="vip1", photo_path=vip1_path)
@@ -173,7 +259,7 @@ async def handle_chat_join_request(chat_join_request: ChatJoinRequest):
         )
         await safe_send_message(chat_id=user_id, text=AR_MESSAGE, reply_markup=lang_keyboard)
         
-        # انتظار 5 ثواني حتى يتمكن العميل من قراءة الرسالة قبل ظهور الصورة الطويلة
+        # Delay for 5 seconds to let user read the message
         await asyncio.sleep(5)
         
         # 3. Send the registration illustration image with "Done" button
@@ -195,7 +281,6 @@ async def handle_chat_join_request(chat_join_request: ChatJoinRequest):
 
 @dp.callback_query(F.data == "switch_fr")
 async def switch_to_french(callback_query: CallbackQuery):
-    # FIRST LINE: Answer callback immediately to prevent Telegram UI glitch ("kicking out")
     await callback_query.answer(cache_time=2)
     try:
         if callback_query.message:
@@ -208,7 +293,6 @@ async def switch_to_french(callback_query: CallbackQuery):
                 link_preview_options=LinkPreviewOptions(is_disabled=True)
             )
     except TelegramAPIError as e:
-        # Ignore "message is not modified" error if user spams the button
         if "message is not modified" not in str(e).lower():
             logger.error(f"Error switching to French: {e}")
     except Exception as e:
@@ -217,7 +301,6 @@ async def switch_to_french(callback_query: CallbackQuery):
 
 @dp.callback_query(F.data == "switch_ar")
 async def switch_to_arabic(callback_query: CallbackQuery):
-    # FIRST LINE: Answer callback immediately
     await callback_query.answer(cache_time=2)
     try:
         if callback_query.message:
@@ -238,14 +321,11 @@ async def switch_to_arabic(callback_query: CallbackQuery):
 
 @dp.callback_query(F.data == "confirm_registration")
 async def handle_confirmation(callback_query: CallbackQuery):
-    # FIRST LINE: Answer callback immediately
     await callback_query.answer(cache_time=5)
     try:
         if callback_query.message:
-            # Safely remove the "Done" button from the photo
             await callback_query.message.edit_reply_markup(reply_markup=None)
         
-        # Send Thank You message
         await safe_send_message(chat_id=callback_query.from_user.id, text=THANK_YOU_MSG)
         logger.info(f"User {callback_query.from_user.id} confirmed registration.")
         
