@@ -115,7 +115,7 @@ def get_ar_keyboard():
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton(text="🇲🇦 Voir en Français", callback_data="switch_fr")],
-            [InlineKeyboardButton(text="📝 سجل الآن", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
+            [InlineKeyboardButton(text="🌐 سجل الآن", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
             [InlineKeyboardButton(text="📥 حمل التطبيق الآن", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
         ]
     )
@@ -124,7 +124,7 @@ def get_fr_keyboard():
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton(text="🇪🇬 عرض بالعربية", callback_data="switch_ar")],
-            [InlineKeyboardButton(text="📝 S'inscrire maintenant", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
+            [InlineKeyboardButton(text="🌐 S'inscrire maintenant", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
             [InlineKeyboardButton(text="📥 Télécharger l'application", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
         ]
     )
@@ -132,7 +132,7 @@ def get_fr_keyboard():
 def get_approval_keyboard():
     return InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="📝 سجل الآن", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
+            [InlineKeyboardButton(text="🌐 سجل الآن", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
             [InlineKeyboardButton(text="📥 حمل التطبيق الآن", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
         ]
     )
@@ -305,8 +305,8 @@ async def handle_chat_join_request(chat_join_request: ChatJoinRequest):
 
         await safe_send_message(chat_id=user_id, text=AR_MESSAGE, reply_markup=get_ar_keyboard())
         
-        # Delay increased to 13 seconds (8 + 5) per user request
-        await asyncio.sleep(13)
+        # Delay increased to 20 seconds per user request
+        await asyncio.sleep(20)
         
         done_keyboard = InlineKeyboardMarkup(
             inline_keyboard=[[InlineKeyboardButton(text="✅ تم / Terminé", callback_data="confirm_registration")]]
