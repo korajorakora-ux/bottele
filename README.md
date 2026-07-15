@@ -1,4 +1,4 @@
-# spinbetterInstructions_bot
+# FANSPORT_bot
 
 This is a Telegram Bot built with Python 3.12 and aiogram 3.x. The bot acts as an Admin in a private Telegram channel and automatically sends a private message to users who request to join the channel (Chat Join Request).
 

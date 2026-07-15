@@ -44,18 +44,18 @@ FILE_CACHE = {
 # ----------------- MESSAGES -----------------
 AR_MESSAGE = """👋 <b>أهلاً بك يا بطل، ونورت القناة!</b> ❤️
 
-علشان تستلم القسايم التراكمية اليومية ونبدأ نحقق أرباح مستمرة مع بعض، لازم يكون عندك حساب على SpinBetter لأن كل أكوادنا وتوقعاتنا الـ VIP مخصصة للتطبيق ده فقط.
+علشان تستلم القسايم التراكمية اليومية ونبدأ نحقق أرباح مستمرة مع بعض، لازم يكون عندك حساب على FANSPORT لأن كل أكوادنا وتوقعاتنا الـ VIP مخصصة للتطبيق ده فقط.
 
 <b>خطوات بسيطة جداً تفصلك عن الانضمام:</b>
 
 1️⃣ <b>لإنشاء حسابك الجديد:</b>
-<a href="https://redirspinner.com/30jg?p=%2Fregistration%2F">🌐 اضغط هنا للتسجيل</a> (أو استخدم الزر بالأسفل).
+<a href="https://lxzsdfgw.xyz/L?tag=d_5851618m_105936c_&site=5851618&ad=105936&r=ar">🌐 اضغط هنا للتسجيل</a> (أو استخدم الزر بالأسفل).
 
 2️⃣ <b>لتحميل تطبيق الأندرويد:</b>
-<a href="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K">📱 اضغط هنا للتحميل</a> (أو استخدم الزر بالأسفل).
+<a href="https://lxzsdfgw.xyz/L?tag=d_5851618m_126154c_&site=5851618&ad=126154">📱 اضغط هنا للتحميل</a> (أو استخدم الزر بالأسفل).
 
 3️⃣ 🎁 <b>عند التسجيل، استخدم كود البونص:</b>
-<code>KORAWIN</code>
+<code>FS100</code>
 <i>(استخدام الكود هيضمن لك بونص ترحيبي قوي جداً على حسابك!)</i>
 
 💡 <b>الخدمة مجانية بالكامل.</b> لن يُطلب منك أي رسوم أو اشتراكات!
@@ -67,18 +67,18 @@ AR_MESSAGE = """👋 <b>أهلاً بك يا بطل، ونورت القناة!</
 
 FR_MESSAGE = """👋 <b>Bienvenue champion !</b> ❤️
 
-Pour recevoir les coupons cumulatifs quotidiens et générer des profits continus avec nous, vous devez avoir un compte SpinBetter. Tous nos codes et pronostics VIP sont exclusifs à cette application.
+Pour recevoir les coupons cumulatifs quotidiens et générer des profits continus avec nous, vous devez avoir un compte FANSPORT. Tous nos codes et pronostics VIP sont exclusifs à cette application.
 
 <b>Des étapes très simples vous séparent de l'accès :</b>
 
 1️⃣ <b>Pour créer votre nouveau compte :</b>
-<a href="https://redirspinner.com/30jg?p=%2Fregistration%2F">🌐 Cliquez ici pour vous inscrire</a> (ou utilisez le bouton ci-dessous).
+<a href="https://lxzsdfgw.xyz/L?tag=d_5851618m_105936c_&site=5851618&ad=105936&r=ar">🌐 Cliquez ici pour vous inscrire</a> (ou utilisez le bouton ci-dessous).
 
 2️⃣ <b>Pour télécharger l'application Android :</b>
-<a href="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K">📱 Cliquez ici pour télécharger</a> (ou utilisez le bouton ci-dessous).
+<a href="https://lxzsdfgw.xyz/L?tag=d_5851618m_126154c_&site=5851618&ad=126154">📱 Cliquez ici pour télécharger</a> (ou utilisez le bouton ci-dessous).
 
 3️⃣ 🎁 <b>Lors de l'inscription, utilisez le code promo :</b>
-<code>KORAWIN</code>
+<code>FS100</code>
 <i>(Ce code garantit un puissant bonus de bienvenue sur votre compte !)</i>
 
 💡 <b>Le service est totally gratuit.</b> Aucun frais ou abonnement ne sera demandé !
@@ -100,12 +100,12 @@ APPROVAL_MSG = """🎉 <b>مبروك! تم قبول انضمامك للقناة 
 تذكير أخير ومهم جداً لضمان بقائك معنا واستفادتك من التوقعات:
 
 1️⃣ إذا لم تقم بإنشاء حسابك بعد، قم بإنشائه الآن:
-<a href="https://redirspinner.com/30jg?p=%2Fregistration%2F">🌐 رابط التسجيل المباشر</a>
+<a href="https://lxzsdfgw.xyz/L?tag=d_5851618m_105936c_&site=5851618&ad=105936&r=ar">🌐 رابط التسجيل المباشر</a>
 
 2️⃣ حمل التطبيق من هنا:
-<a href="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K">📱 رابط التحميل</a>
+<a href="https://lxzsdfgw.xyz/L?tag=d_5851618m_126154c_&site=5851618&ad=126154">📱 رابط التحميل</a>
 
-🎁 <b>لا تنسَ استخدام كود البونص:</b> <code>KORAWIN</code> للحصول على المكافأة.
+🎁 <b>لا تنسَ استخدام كود البونص:</b> <code>FS100</code> للحصول على المكافأة.
 
 بالتوفيق، ونراك في أرباح اليوم! 💸❤️"""
 
@@ -115,8 +115,8 @@ def get_ar_keyboard():
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton(text="🇲🇦 Voir en Français", callback_data="switch_fr")],
-            [InlineKeyboardButton(text="🌐 سجل الآن", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
-            [InlineKeyboardButton(text="📥 حمل التطبيق الآن", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
+            [InlineKeyboardButton(text="🌐 سجل الآن", url="https://lxzsdfgw.xyz/L?tag=d_5851618m_105936c_&site=5851618&ad=105936&r=ar")],
+            [InlineKeyboardButton(text="📥 حمل التطبيق الآن", url="https://lxzsdfgw.xyz/L?tag=d_5851618m_126154c_&site=5851618&ad=126154")]
         ]
     )
 
@@ -124,16 +124,16 @@ def get_fr_keyboard():
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton(text="🇪🇬 عرض بالعربية", callback_data="switch_ar")],
-            [InlineKeyboardButton(text="🌐 S'inscrire maintenant", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
-            [InlineKeyboardButton(text="📥 Télécharger l'application", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
+            [InlineKeyboardButton(text="🌐 S'inscrire maintenant", url="https://lxzsdfgw.xyz/L?tag=d_5851618m_105936c_&site=5851618&ad=105936&r=ar")],
+            [InlineKeyboardButton(text="📥 Télécharger l'application", url="https://lxzsdfgw.xyz/L?tag=d_5851618m_126154c_&site=5851618&ad=126154")]
         ]
     )
 
 def get_approval_keyboard():
     return InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="🌐 سجل الآن", url="https://redirspinner.com/30jg?p=%2Fregistration%2F")],
-            [InlineKeyboardButton(text="📥 حمل التطبيق الآن", url="https://spin-b.com/mwGY27?tag=d_220149m_716178c_cz_P9pguCUE7MR9srqvUvka4K")]
+            [InlineKeyboardButton(text="🌐 سجل الآن", url="https://lxzsdfgw.xyz/L?tag=d_5851618m_105936c_&site=5851618&ad=105936&r=ar")],
+            [InlineKeyboardButton(text="📥 حمل التطبيق الآن", url="https://lxzsdfgw.xyz/L?tag=d_5851618m_126154c_&site=5851618&ad=126154")]
         ]
     )
 
