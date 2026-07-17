@@ -7,7 +7,7 @@ This is a Telegram Bot built with Python 3.12 and aiogram 3.x. The bot acts as a
 - `config.py`: Configuration and cross-platform path management.
 - `requirements.txt`: Minimal Python dependencies required for Railway and local deployment.
 - `.env`: Environment variables (contains `BOT_TOKEN`). Make sure this is ignored by git!
-- `images/`: Directory containing the `register.jpeg` image sent to users.
+- `images/`: Directory containing the `register.jpg` image sent to users.
 - `Procfile`: Command configuration for cloud platforms like Railway and Heroku.
 
 ---
@@ -15,7 +15,7 @@ This is a Telegram Bot built with Python 3.12 and aiogram 3.x. The bot acts as a
 ## Local Setup Instructions
 
 1. **Place your image:**
-   Ensure you have an image named `register.jpeg` inside the `images` folder.
+   Ensure you have an image named `register.jpg` inside the `images` folder.
 
 2. **Configure your Token:**
    Create a `.env` file and set your actual Telegram bot token:

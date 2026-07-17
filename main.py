@@ -289,8 +289,8 @@ async def handle_chat_join_request(chat_join_request: ChatJoinRequest):
     try:
         user = chat_join_request.from_user
         user_id = user.id
-        vip1_path = BASE_DIR / "images" / "vip1.png"
-        register_img_path = BASE_DIR / "images" / "register.jpeg"
+        vip1_path = BASE_DIR / "images" / "vip1.jpg"
+        register_img_path = BASE_DIR / "images" / "register.jpg"
         
         await upsert_user(
             user_id=user_id,
